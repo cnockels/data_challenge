@@ -18,8 +18,7 @@ with
         from 
             qrySource cross join
             unnest(variants) as unnested
-        qualify 
-            unnested.updated_at = max(unnested.updated_at) over (partition by unnested.variant_id)
+        qualify unnested.updated_at = max(unnested.updated_at) over (partition by unnested.variant_id)
     ),
 
     qryProducts as 
