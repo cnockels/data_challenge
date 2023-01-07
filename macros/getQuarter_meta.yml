@@ -1,0 +1,17 @@
+version: 2
+
+macros:
+  - name: getQuarter
+    description: >
+        To return the quarter of the year (1, 2, 3, 4) the month is in
+        <p>
+        <p><b>Example:</b>
+        <p><b>Inputs:</b>
+        <li>in_month_field value: 12/29/2020</li>
+        <p>
+        <p><b>Returns:</b> 4
+
+    arguments:
+      - name: in_month_field
+        type: string
+        description: The name of the month field - the values should be integers

@@ -1,0 +1,19 @@
+version: 2
+
+macros:
+  - name: generateNumericalHash
+    description: >
+        Provides a farm_fingerprint statement to create a numerical hash for 1 or more columns. Columns are passed as a list.
+        <p><b>Sample Usages:</b>
+        <pre>
+            {% raw %}{{{% endraw %} 
+            generateNumericalHash(['column1'])
+            {% raw %}}}{% endraw %}    
+        </pre>     
+
+        <pre>
+            {% raw %}{{{% endraw %} 
+            generateNumericalHash(['column1','column2','column3'])
+            {% raw %}}}{% endraw %}    
+        </pre>            
+        </p>

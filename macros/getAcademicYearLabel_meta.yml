@@ -1,0 +1,29 @@
+version: 2
+
+macros:
+  - name: getAcademicYearLabel
+    description: >
+        To return the Academic year ('20-'21) the date is in
+        <p>
+        <p><b>Example:</b>
+        <p><b>Inputs:</b>
+        <li>in_date_field value: 12/29/2020</li>
+        <li>in_offset_year_start_month value: 8</li>
+        <p>
+        <p><b>Returns:</b> '20-'21
+        <p>
+        <p><b>Example 2:</b>
+        <p><b>Inputs:</b>
+        <li>in_date_field value: 1/29/2021</li>
+        <li>in_offset_year_start_month value: 8</li>
+        <p>
+        <p><b>Returns:</b> '20-'21
+
+    arguments:
+      - name: in_date_field
+        type: string
+        description: The name of the date field  
+
+      - name: in_offset_year_start_month
+        type: integer
+        description: The name of the field containing the month the year offset year begins (1 - January, etc.)

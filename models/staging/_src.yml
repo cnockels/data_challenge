@@ -52,7 +52,7 @@ sources:
           - name: title
             description: The title of the product
 
-          - name: varients
+          - name: variants
             description: >
               Array of all existing product variants associated with the product, each variant representing a different version of the product.
 

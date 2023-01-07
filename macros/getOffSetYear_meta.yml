@@ -1,0 +1,22 @@
+version: 2
+
+macros:
+  - name: getOffsetYear
+    description: >
+        Used to return the offset year for a date, usually for academic or fiscal purposes. 
+        <p>
+        <p> <b>Example:</b>
+        <p><b>Inputs:</b>
+        <li>in_date_field value: 9/1/2020</li>
+        <li>in_offset_year_start_month value: 9</li>
+        <p> 
+        <p><b>Returns:</b> 2021
+
+    arguments:
+      - name: in_date_field
+        type: string
+        description: The name of the date field
+
+      - name: in_offset_year_start_month
+        type: integer
+        description: The name of the field containing the month the year offset year begins (1 - January, etc.)
