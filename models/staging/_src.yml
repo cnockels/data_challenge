@@ -1,0 +1,97 @@
+version: 2
+
+sources:
+
+  - name: source_tables
+    description: Source tables for the data challenge
+    database: data-recruiting
+    schema: ae_data_challenge_v1
+
+    tables:
+
+      - name: orders
+        description: Contains a record for each order placed through the e-commerce system 
+        meta:
+            contains_pii: false
+        columns:
+          - name: _id
+            description: The order ID, unique identifier for an order
+
+          - name: _loaded_at
+            description: Timestamp to indicate when the record was loaded into the table
+
+          - name: created_at
+            description: Timestamp to indicate when the order was created
+
+          - name: updated_at
+            description: Timestamp to indicate when the order was last updated
+
+          - name: subtotal
+            description: The dollar sum of all line item amounts after discounts but before shipping, taxes, and tips (in USD)
+
+          - name: total
+            description: The dollar sum of all line item amounts, discounts, shipping, taxes, and tips (in USD)
+
+      - name: products
+        description: Contains a record for each product available for purchase in our stores
+        meta:
+            contains_pii: false
+        columns:
+          - name: _id
+            description: The product ID, unique identifier for a product
+
+          - name: _loaded_at
+            description: Timestamp to indicate when the record was loaded into the table
+
+          - name: created_at
+            description: Timestamp to indicate when the product was created in the e-commerce system
+
+          - name: updated_at
+            description: Timestamp to indicate when the product was last updated in our e-commerce system
+
+          - name: title
+            description: The title of the product
+
+          - name: varients
+            description: >
+              Array of all existing product variants associated with the product, each variant representing a different version of the product.
+
+      - name: web_events
+        description: Contains a record for each event committed by a user on our web store
+        meta:
+            contains_pii: false
+        columns:
+          - name: _id
+            description: The web event ID, unique identifier for the event
+
+          - name: _loaded_at
+            description: Timestamp to indicate when the record was loaded into the table
+
+          - name: cookie_id
+            description: >
+              Device identifier used to indicate a website visitor.
+              For a new visitor, this value is set in the user's browser cookies.
+
+          - name: customer_id
+            description: Unique identifier to indicate a customer. This value is null if the user is an anonymous web visitor
+
+          - name: event_name
+            description: Event name that indicates how user interacted with the website
+
+          - name: event_url
+            description: URL on which the event occurred
+
+          - name: event_properties
+            description: JSON string containing contextual properties relating to the event
+
+          - name: timestamp
+            description: Timestamp to indicate when the event occurred
+
+          - name: utm_campaign
+            description: Campaign that referred the user
+
+          - name: utm_medium
+            description: Medium that referred the user
+
+          - name: utm_source
+            description: Source that referred the user
