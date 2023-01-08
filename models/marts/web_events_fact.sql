@@ -20,6 +20,7 @@ with
             ]) 
             }} as web_event_fact_wid,
             qryWebEvents.web_event_wid,
+            qryWebEvents.web_event_date,
             qryOrders.order_wid,
             qryProducts.product_wid
         from 

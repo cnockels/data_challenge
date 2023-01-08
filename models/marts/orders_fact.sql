@@ -17,6 +17,8 @@ with
             }} as order_fact_wid,
             qryOrders.order_wid,
             qryProducts.product_wid,
+            qryOrders.order_created_date as order_date,
+            qryOrders.order_created_time as order_time,
             qryOrders.order_total,
             qryOrders.order_subtotal,
             qryOrders.order_line_item_quantity,

@@ -26,12 +26,6 @@ models:
         tests:
           - not_null
 
-      - name: order_created_date
-        description: The order created date
-
-      - name: order_created_time
-        description: The order created time
-
       - name: order_last_updated_date
         description: The order last updated date
 

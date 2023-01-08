@@ -37,12 +37,6 @@ models:
       - name: web_event_url
         description: The URL on which the event occurred
 
-      - name: web_event_date
-        description: The date when the event occurred
-
-      - name: web_event_time
-        description: Timestamp to indicate when the event occurred
-
       - name: web_event_utm_campaign
         description: The campaign that referred the user
 

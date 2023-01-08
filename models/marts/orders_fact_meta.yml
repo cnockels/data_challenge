@@ -30,6 +30,12 @@ models:
               to: ref('products')
               field: product_wid   
 
+      - name: order_date
+        description: The order created date, used to connect to date_reference
+      
+      - name: order_time
+        description: The order created time
+
       - name: order_total
         description: <
           The dollar sum of all line item amounts, discounts, shipping, taxes, and tips in USD

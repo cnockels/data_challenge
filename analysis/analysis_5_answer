@@ -1,0 +1,9 @@
+Analysis question 5:
+Among `page` events only, what are the top five most common page URLs that immediately preceded a user’s navigation to the “checkout.bollandbranch.com” domain during their session?
+ 
+Answer:
+1. https://www.bollandbranch.com/
+2. https://checkout.bollandbranch.com/account
+3. https://www.bollandbranch.com/products/signature-hemmed-sheet-set/?color=Spruce%20-%20Limited%20Edition
+4. https://checkout.bollandbranch.com/account/login?return_url=%2Faccount
+5. https://checkout.bollandbranch.com/account/login 

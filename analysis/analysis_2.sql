@@ -1,18 +1,18 @@
 with 
-    SourceOrders as (
-        select * from `data-recruiting.ae_data_challenge_v1.orders`, 
-        unnest(line_items) as line_items 
-        qualify updated_at = max(updated_at) over (partition by _id)
-    ),
     SourceProducts as (
         select * from `data-recruiting.ae_data_challenge_v1.products` 
         qualify updated_at = max(updated_at) over (partition by _id)
-    ),  
-    
+    ),
+    SourceOrders as (
+        select * from `data-recruiting.ae_data_challenge_v1.orders`,
+        unnest(line_items) as line_items
+        qualify updated_at = max(updated_at) over (partition by _id)
+    ),
+
     qryProducts as 
-    (
+    (	
         select 
-            Products.* except(variants),
+            SourceProducts.* except(variants),
             unnested.variant_id as product_variant_id,
             unnested.title as variant_title,
             unnested.sku as product_sku,
@@ -24,26 +24,28 @@ with
             SourceProducts cross join
             unnest(variants) as unnested
         qualify unnested.updated_at = max(unnested.updated_at) over (partition by unnested.variant_id)
-    ),  
+    ),
 
-    qryJoin as 
+    qryLineRevenue as 
     (
-        select 
-    		SourceOrders._id, 
-    		qryProducts.category,
-    		qryProducts.product_size,
-        from 
+    	select 
+    		SourceOrders._id,
+        	SourceOrders.price * SourceOrders.quantity - SourceOrders.line_total_discount as order_line_gross_revenue,
+    		qryProducts.product_sku
+    	from 
     		SourceOrders left join
     		qryProducts on
     			SourceOrders.variant_id = qryProducts.product_variant_id
-    ),  
+    ),
 
-    qryKingSheets as 
+    qrySkuTotals as 
     (
-        select
-            concat(round(sum(case when category = 'Sheet Sets' and product_size = 'King' then 1.0 end) / count(*) * 100, 2), ' %') as king_sheet_order_percent
-        from
-            qryJoin
+    	select distinct
+        	product_sku,
+    		sum(order_line_gross_revenue) over (partition by product_sku) as total_gross_revenue
+    	from
+            qryLineRevenue
     )
 
-select * from qryKingSheets
+select * from qrySkuTotals
+qualify rank() over (order by total_gross_revenue desc) = 1
