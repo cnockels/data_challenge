@@ -1,0 +1,160 @@
+version: 2
+
+models:            
+  - name: date_reference
+    description: Includes metadata for dates including Fiscal dates, Academic dates, etc.  Dates are from 12/31/1899 - 12/31/2099. This table can be joined to others via the calendar_date field to extract information such as fiscal_trimester.
+
+    meta: 
+        owner: Data Engineering
+        contains_pii: false
+        build_frequency: One-Time
+
+    columns:
+      - name:  date_wid
+        description:  The date in the format YYYYMMDD
+        tests:
+          - unique
+          - not_null
+
+      - name:  calendar_date
+        description:  The full date
+      - name:  day_of_month
+        description:  The day of the month
+      - name:  day_of_week
+        description:  The day of the week as a number
+      - name:  day_of_year
+        description:  The day of the year as a number
+      - name:  calendar_month
+        description:  The month as a number
+      - name:  calendar_year
+        description:  The year as a number. For the ISO year, see the year_iso field
+      - name:  day_of_week_name
+        description:  The full name of the day of the week
+      - name:  day_of_week_name_abbr
+        description:  The abbreviated name of the day of the week
+      - name:  cal_month_name
+        description:  The full name of the calendar month
+      - name:  cal_month_name_abbr
+        description:  The abbreviated name of the calendar month
+      - name:  week_of_year
+        description:  The week of the year (for the ISO week of the year, see week_of_year_iso)
+      - name:  quarter_of_year
+        description:  The quarter of the year
+      - name:  year_iso
+        description:  The ISO year (https://en.wikipedia.org/wiki/ISO_8601)
+      - name:  week_of_year_iso
+        description:  The ISO week (https://en.wikipedia.org/wiki/ISO_week_date)
+        
+      - name:  prev_day
+        description:  The day before calendar_date. This will always return a valid date.
+      - name:  next_day
+        description:  The after calendar_date. This will always return a valid date.
+      - name:  prev_week
+        description:  One full week prior to calendar_date. This will always return a valid date.
+      - name:  next_week
+        description:  One full week after calendar_date. This will always return a valid date.
+      - name:  prev_month
+        description:  One month before calendar_date. When the date is at (or near) the last day of the month, if the resulting month has fewer days than the original date's day, then the result day is the last day of the new month.
+      - name:  next_month
+        description:  One month after calendar_date. When the date is at (or near) the last day of the month, if the resulting month has fewer days than the original date's day, then the result day is the last day of the new month.
+      - name:  prev_year
+        description:  One year before calendar_date. When the date is at (or near) the last day of the month, if the resulting month has fewer days than the original date's day, then the result day is the last day of the new month.
+      - name:  next_year
+        description:  One year after calendar_date. When the date is at (or near) the last day of the month, if the resulting month has fewer days than the original date's day, then the result day is the last day of the new month.
+      - name:  prev_30_days
+        description:  30 days prior to the calendar_date. This will not necessarily correspond to a calendar month
+      - name:  next_30_days
+        description:  30 days after the calendar_date. This will not necessarily correspond to a calendar month
+      - name:  prev_180_days
+        description:  180 days prior to the calendar_date.
+      - name:  next_180_days
+        description:  180 days after the calendar_date.
+
+      - name:  first_day_of_week
+        description:  The date of the first day of the week calendar_date is in.
+      - name:  last_day_of_week
+        description:  The date of the last day of the week calendar_date is in.
+      - name:  first_day_of_week_iso
+        description:  The date of the first day of the ISO week calendar_date is in.
+      - name:  last_day_of_week_iso
+        description:  The date of the last day of the ISO week calendar_date is in.
+      - name:  first_day_of_month
+        description:  The first day of the month calendar_date is in.
+      - name:  last_day_of_month
+        description:  The last day of the month calendar_date is in.
+      - name:  first_day_of_quarter
+        description:  The first day of the quarter calendar_date is in.
+      - name:  last_day_of_quarter
+        description:  The last day of the quarter calendar_date is in.
+      - name:  first_day_of_year
+        description:  The first day of the year calendar_date is in.
+      - name:  last_day_of_year
+        description:  The last day of the year calendar_date is in.
+      - name:  first_day_of_year_iso
+        description:  The first day of the ISO year calendar_date is in.
+      - name:  last_day_of_year_iso
+        description:  The last day of the ISO year calendar_date is in.
+
+      - name:  is_first_day_of_week
+        description:  If calendar_date falls on a Sunday, the value is true.
+      - name:  is_last_day_of_week
+        description:  If calendar_date falls on a Saturday, the value is true.
+      - name:  is_first_day_of_week_iso
+        description:  If calendar_date falls on the first day of the ISO week, the value is true.
+      - name:  is_last_day_of_week_iso
+        description:  If calendar_date falls on the last day of the ISO week, the value is true.
+      - name:  is_first_day_of_month
+        description:  If calendar_date falls on the first day of the month, the value is true.
+      - name:  is_last_day_of_month
+        description:  If calendar_date falls on the last day of the month, the value is true.
+      - name:  is_first_day_of_quarter
+        description:  If calendar_date falls on the first day of the quarter, the value is true.
+      - name:  is_last_day_of_quarter
+        description:  If calendar_date falls on the last day of the quarter, the value is true.
+      - name:  is_first_day_of_year
+        description:  If calendar_date falls on the first day of the year, the value is true.
+      - name:  is_last_day_of_year
+        description:  If calendar_date falls on the last day of the year, the value is true.
+      - name:  is_first_day_of_year_iso
+        description:  If calendar_date falls on the first day of the ISO year, the value is true.
+      - name:  is_last_day_of_year_iso
+        description:  If calendar_date falls on the last day of the ISO year, the value is true.
+
+      - name:  fmt_year_dash_month_number
+        description: The date formatted to display the 4 digit year, a dash and then the month number. Example 2022-03
+      - name:  fmt_year_space_month_abbr
+        description: The date formatted to display the 4 digit year, a space and then the month abbrevation. Example 2022 Mar
+      - name:  fmt_year_space_month_name
+        description: The date formatted to display the 4 digit year, a space and then the month name. Example 2022 March
+      - name:  fmt_month_number_dash_year
+        description: The date formatted to display with the month number with a dash and then the 4 digit year. Example 03-2022
+      - name:  fmt_month_name_abbr_space_year
+        description: The date formatted to display with the month abbrevation with a space and then the 4 digit year. Example Mar 2022
+      - name:  fmt_month_name_abbr_comma_year
+        description: The date formatted to display with the month abbrevation with a comma and then the 4 digit year. Example Mar, 2022
+      - name:  fmt_month_name_space_year
+        description: The date formatted to display with the month name with a space and then the 4 digit year. Example March 2022
+      - name:  fmt_month_name_comma_year        
+        description: The date formatted to display with the month name with a comma and then the 4 digit year. Example March, 2022
+
+      - name:  academic_year
+        description:  The academic year
+      - name:  academic_year_label
+        description:  The range of the academic year, assuming the academic year starts in August
+      - name:  academic_month
+        description:  The month within the academic year, assuming the academic year starts in August.
+      - name:  academic_semester
+        description:  Assumes Fall is August - December, Spring is January - May, Summer is June - July
+      - name:  academic_semester_year
+        description:  The academic semester and year
+
+      - name:  us_fiscal_year
+        description:  The fiscal year for US ministries, starting in September.
+      - name:  us_fiscal_period
+        description:  The number of the "month" within the US fiscal year.
+      - name:  us_fiscal_quarter
+        description:   The number of the quarter within the US fiscal year.                                                       
+      - name:  us_fiscal_trimester
+        description:   The number of the trimester within the US fiscal year.
+      - name:  us_fiscal_semester
+        description:   The number of the semester within the US fiscal year.

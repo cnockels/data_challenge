@@ -1,0 +1,14 @@
+config:
+  default:
+    target: dev
+    outputs:
+      dev:
+        type: bigquery
+        method: oauth
+        project: data-recruiting
+        dataset: ae_data_challenge_v1_cnockels
+        location: us
+        priority: interactive
+        send_anonymous_usage_stats: false
+        threads: 4
+        
