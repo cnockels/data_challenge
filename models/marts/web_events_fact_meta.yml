@@ -37,6 +37,12 @@ models:
               to: ref('web_events')
               field: web_event_wid  
 
+      - name: web_event_date
+        description: The date when the event occurred, used to connect to date_reference
+      
+      - name: web_event_time
+        description: Timestamp to indicate when the event occurred
+
     metrics:
       - name: total_page_views
         label: page_views

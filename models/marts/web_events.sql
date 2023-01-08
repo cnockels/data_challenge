@@ -13,7 +13,9 @@ with
                 session_campaign,
                 web_event_sequence_number,
                 web_event_product_id,
-                web_event_order_id                
+                web_event_order_id,
+                web_event_date,
+                web_event_time                
             ),
             if(web_event_sequence_number = 1, web_event_url, null) as web_session_landing_page_url,
             max(session_medium) over (partition by web_session_wid) as web_session_medium,
