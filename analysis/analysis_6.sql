@@ -107,21 +107,6 @@ with
             qrySessionWid 
     ),
 
-    qryFirstSource as 
-    (
-        select 
-            web_session_wid, 
-            min(web_event_time) as first_source_event_time
-        from
-            (
-                select *
-                from qrySessionFirstEvent
-                qualify min(web_event_utm_source) over (partition by web_session_wid order by web_event_time desc rows unbounded preceding) is not null
-            ) 
-        group by 
-            web_session_wid
-    ),
-
     qryFirstCampaign as 
     (
         select 
@@ -141,12 +126,9 @@ with
     (
         select
             qrySessionFirstEvent.*,
-            if(qrySessionFirstEvent.web_event_time = qryFirstSource.first_source_event_time, web_event_utm_source, null) as session_source,
             if(qrySessionFirstEvent.web_event_time = qryFirstCampaign.first_campaign_event_time, web_event_utm_campaign, null) as session_campaign
         from
             qrySessionFirstEvent left join
-            qryFirstSource on 
-                qrySessionFirstEvent.web_session_wid = qryFirstSource.web_session_wid left join
             qryFirstCampaign on 
                 qrySessionFirstEvent.web_session_wid = qryFirstCampaign.web_session_wid
     ),

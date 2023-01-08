@@ -1,0 +1,15 @@
+version: 2
+
+macros:
+  - name: TrimLower
+    description: >
+        Sets the column <b><i>in_string_column</i></b> to lowercase and trim spaces
+        <b>Sample Usage:</b>
+        <pre>
+            {% raw %}{{{% endraw %} TrimLower('witty_column_name') {% raw %}}}{% endraw %}    
+        </pre>   
+
+    arguments:
+      - name: in_string_column
+        type: string
+        description: A column of string data type

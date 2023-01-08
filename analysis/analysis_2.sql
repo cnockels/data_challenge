@@ -12,14 +12,9 @@ with
     qryProducts as 
     (	
         select 
-            SourceProducts.* except(variants),
+            SourceProducts._id,
             unnested.variant_id as product_variant_id,
-            unnested.title as variant_title,
-            unnested.sku as product_sku,
-            unnested.created_at as variant_created_at,
-            unnested.updated_at as variant_updated_at,
-            unnested.option1 as product_style,
-            unnested.option2 as product_size
+            unnested.sku as product_sku
         from 
             SourceProducts cross join
             unnest(variants) as unnested

@@ -1,28 +1,22 @@
 with
-    qryFirstEvents as (
-        select * from {{ ref('int_web_event_first_events') }}
+    qrySource as (
+        select * from {{ ref('stg_web_events') }}
     ),
 
     qryFinal as 
     (
         select  
-            * except
-            (
-                session_medium,
-                session_source,
-                session_campaign,
-                web_event_sequence_number,
-                web_event_product_id,
-                web_event_order_id,
-                web_event_date,
-                web_event_time                
-            ),
-            if(web_event_sequence_number = 1, web_event_url, null) as web_session_landing_page_url,
-            max(session_medium) over (partition by web_session_wid) as web_session_medium,
-            max(session_source) over (partition by web_session_wid) as web_session_source,
-            max(session_campaign) over (partition by web_session_wid) as web_session_campaign
+            web_event_wid,	
+            web_event_id,		
+            web_event_cookie_id,		
+            web_event_customer_id,		
+            web_event_name,		
+            web_event_url,		
+            web_event_utm_campaign,		
+            web_event_utm_medium,	
+            web_event_utm_source
         from    
-            qryFirstEvents
+            qrySource
     )
 
 select * from qryFinal

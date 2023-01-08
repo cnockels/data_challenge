@@ -12,14 +12,14 @@ with
     qryProducts as 
     (
         select 
-            Products.* except(variants),
+            SourceProducts.* except(variants),
             unnested.variant_id as product_variant_id,
             unnested.title as variant_title,
             unnested.sku as product_sku,
             unnested.created_at as variant_created_at,
             unnested.updated_at as variant_updated_at,
-            unnested.option1 as product_style,
-            unnested.option2 as product_size
+            unnested.option1,
+            unnested.option2 
         from 
             SourceProducts cross join
             unnest(variants) as unnested
@@ -31,7 +31,10 @@ with
         select 
     		SourceOrders._id, 
     		qryProducts.category,
-    		qryProducts.product_size,
+    		qryProducts.variant_title,
+            qryProducts.option1,
+            qryProducts.option2 
+            
         from 
     		SourceOrders left join
     		qryProducts on
@@ -41,7 +44,14 @@ with
     qryKingSheets as 
     (
         select
-            concat(round(sum(case when category = 'Sheet Sets' and product_size = 'King' then 1.0 end) / count(*) * 100, 2), ' %') as king_sheet_order_percent
+            concat(round(sum
+                (
+                    case 
+                        when category = 'Sheet Sets' and 
+                        (variant_title like('%King%') or variant_title like('%King%')) then 
+                            1.0 
+                    end
+                ) / count(*) * 100, 2), ' %') as king_sheet_order_percent
         from
             qryJoin
     )

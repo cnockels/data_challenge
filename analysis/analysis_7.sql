@@ -144,7 +144,7 @@ with
 
     qryGrossRevenue as 
     (
-        select distinct
+        select 
             session_source,
             sum(order_gross_revenue) over (partition by web_session_wid) as session_gross_revenue
         from 

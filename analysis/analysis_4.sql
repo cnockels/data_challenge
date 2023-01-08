@@ -123,8 +123,8 @@ with
             qryProducts on
                 qrySessionWid.web_event_product_id = cast(qryProducts._id as string)
         where 
-            web_event_name = 'product_added' and
-            title = 'Plush Bath Towel Set'
+            qrySessionWid.web_event_name = 'product_added' and
+            qryProducts.title = 'Plush Bath Towel Set'
     ),
 
     qryConversionRate as

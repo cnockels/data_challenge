@@ -13,8 +13,8 @@ with
             unnested.sku as product_sku,
             unnested.created_at as variant_created_at,
             unnested.updated_at as variant_updated_at,
-            unnested.option1 as product_style,
-            unnested.option2 as product_size
+            unnested.option1 as product_variant_option_1,
+            unnested.option2 as product_variant_option_2
         from 
             qrySource cross join
             unnest(variants) as unnested
@@ -35,8 +35,8 @@ with
     		cast(variant_id as string) as product_variant_id,
             variant_title as product_variant_title,
             product_sku,
-            product_style,
-            product_size
+            product_variant_option_1,
+            product_variant_option_2
     	from
     		qryUnnest
     )

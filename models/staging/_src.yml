@@ -16,6 +16,8 @@ sources:
         columns:
           - name: _id
             description: The order ID, unique identifier for an order
+            tests:
+              - not_null
 
           - name: _loaded_at
             description: Timestamp to indicate when the record was loaded into the table
@@ -39,6 +41,8 @@ sources:
         columns:
           - name: _id
             description: The product ID, unique identifier for a product
+            tests:
+              - not_null
 
           - name: _loaded_at
             description: Timestamp to indicate when the record was loaded into the table
@@ -63,6 +67,9 @@ sources:
         columns:
           - name: _id
             description: The web event ID, unique identifier for the event
+            tests:
+              - unique
+              - not_null
 
           - name: _loaded_at
             description: Timestamp to indicate when the record was loaded into the table
@@ -71,6 +78,8 @@ sources:
             description: >
               Device identifier used to indicate a website visitor.
               For a new visitor, this value is set in the user's browser cookies.
+            tests:
+              - not_null
 
           - name: customer_id
             description: Unique identifier to indicate a customer. This value is null if the user is an anonymous web visitor
