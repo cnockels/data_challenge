@@ -76,7 +76,7 @@ with
 
     qrySessionWid as 
     (
-        select
+        select 
             qryWebEvents.*,
             {{ generateNumericalHash
             ([

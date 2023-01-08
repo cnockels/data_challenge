@@ -14,9 +14,9 @@ with
             event_url as web_event_url,
             cast(timestamp as date) as web_event_date,
             timestamp as web_event_time,
-            utm_campaign as web_event_utm_campaign,
-            utm_medium as web_event_utm_medium,
-            utm_source as web_event_utm_source,
+            {{ TrimLower('utm_campaign') }} as web_event_utm_campaign,
+            {{ TrimLower('utm_medium') }} as web_event_utm_medium,
+            {{ TrimLower('utm_source') }} as web_event_utm_source,
             json_extract_scalar(event_properties, '$.order_id') as web_event_order_id,
             json_extract_scalar(event_properties, '$.product_id') as web_event_product_id
         from 

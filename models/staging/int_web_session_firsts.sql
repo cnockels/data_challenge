@@ -7,7 +7,7 @@ with
     qrySessionUser as 
     (
         select 
-            *,            
+            *,                        
             if(web_event_time = min(web_event_time) over (partition by web_session_wid), web_event_customer_id, null) as web_session_user
         from 
             qrySessions
@@ -19,6 +19,7 @@ with
     (
         select 
             qrySessions.* except(session_number),
+            cast(qrySessions.web_session_start_time as date) as web_session_date,
             ifnull(max(qrySessionUser.web_session_user) over (partition by qrySessions.web_session_wid), qrySessions.web_event_cookie_id) as web_session_user,
             rank() over (partition by qrySessions.web_session_wid order by qrySessions.web_event_time asc) as web_event_sequence_number
         from
@@ -77,7 +78,7 @@ with
 
     qryAddSessionFields as 
     (
-        select
+        select distinct
             qrySessionFirstEvent.*,
             if(qrySessionFirstEvent.web_event_time = qryFirstMedium.first_medium_event_time, web_event_utm_medium, null) as session_medium,
             if(qrySessionFirstEvent.web_event_time = qryFirstSource.first_source_event_time, web_event_utm_source, null) as session_source,

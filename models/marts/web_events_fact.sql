@@ -1,6 +1,6 @@
 with
     qryWebEvents as (
-        select * from {{ ref('stg_web_events') }}
+        select * from {{ ref('int_web_session_firsts') }}
     ),
     qryOrders as (
         select * from {{ ref('orders') }}
@@ -14,12 +14,13 @@ with
         select
             {{ generateNumericalHash
             ([
-                'web_event_wid',
-                'order_wid',
-                'product_wid'
+                'qryWebEvents.web_event_wid',
+                'qryOrders.order_wid',
+                'qryProducts.product_wid'
             ]) 
             }} as web_event_fact_wid,
             qryWebEvents.web_event_wid,
+            qryWebEvents.web_session_wid,
             qryWebEvents.web_event_date,
             qryWebEvents.web_event_time,
             qryOrders.order_wid,
@@ -27,9 +28,9 @@ with
         from 
             qryWebEvents left join 
             qryOrders on 
-                qryWebEvents.web_event_order_id = qryOrders.order_id left join
+                qryWebEvents.web_event_order_id = qryOrders.order_line_id left join
             qryProducts on 
-                qryWebEvents.web_event_product_id = qryProducts.product_id
+                qryWebEvents.web_event_product_id = qryProducts.product_variant_id
     )
 
 select * from qryJoinWids
