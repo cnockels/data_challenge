@@ -38,11 +38,11 @@ models:
       - name: product_sku
         description: The sku of the product
 
-      - name: product_variant_option_1
-        description: The first product variant option 
+      - name: product_size
+        description: The product size, derrived from product variant options 
 
-      - name: product_variant_option_2
-        description: The second product variant option 
+      - name: product_style
+        description: The product style, derrived from product variant options 
 
       - name: product_created_date
         description: The product created date
