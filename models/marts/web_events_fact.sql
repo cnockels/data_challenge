@@ -21,6 +21,7 @@ with
             }} as web_event_fact_wid,
             qryWebEvents.web_event_wid,
             qryWebEvents.web_event_date,
+            qryWebEvents.web_event_time,
             qryOrders.order_wid,
             qryProducts.product_wid
         from 
