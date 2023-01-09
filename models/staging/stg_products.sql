@@ -68,7 +68,7 @@ with
                         option2
             end as product_size
     	from
-    		qryUnnest
+    	    qryUnnest
     ),
 
     qryAddStyle as 
