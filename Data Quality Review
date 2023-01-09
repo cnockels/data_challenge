@@ -1,0 +1,112 @@
+# data_challenge
+I did not have as much time as I wanted for challenge #3, but below are some of my findings during the modeling process. 
+
+orders:
+  - Primary Key, _id, is not unique. 
+
+  qualify count(_id) over (partition by _id) > 1
+
+  - Has uplicate record that would cause totals to be off. (see orders_for_debugging)
+  - Lots of null values, many order lines with no product id.
+
+  select 
+      row_type,
+      count(*) row_count
+  from 
+     (
+        select 
+            case 
+               when mycolumn is null then 
+                 'NULL'
+               when length(mycolumn) = 0 then
+                 'Empty'
+               else 'Has Value' 
+            end as row_type
+         from 
+            orders
+      ) rows
+  group by row_type
+
+products:
+  - Primary key, _id, is not unique. This is a historical table with updated_at field. 
+
+  qualify count(_id)over(partition by _id)>1
+
+  - The variant fields coming in as an array causes some issues with testing for bad data coming in.
+  - Variant option1 and option2 fields have mixed values that needed to be seperated into distinct columns, size and style. These values are not standardized selections. 
+  - If option fields have no selected values, option 1 defaults to the product_variant_title. If the product is a gift card, then it is the gift card amount.
+  - This is a historical table that needed filtering by the updated_at field
+
+  qualify updated_at = max(updated_at) over (partition by _id)
+
+web_events:
+  - There were many cookie_ids that were encased by characters with a length of 546 and 1056. The standard length of a cookie_id in this table is 36, with exception of some.
+  
+    with
+      qrySource as (
+          select * from `data-recruiting.ae_data_challenge_v1.web_events` 
+      ),
+
+      qryLength as 
+      (
+         select 
+             cookie_id,
+             length(cookie_id) as length
+         from qrySource
+      ),
+
+      qryCount as 
+      (
+         select distinct
+              length, 
+              count(cookie_id)over(partition by length) as count 
+         from qryLength
+         order by count desc
+      )
+  
+  select * from qryCount
+  
+  - I am curious to how the order_id is getting attached to the web_event. Less than .5% of web_events have order_id values. I believe the total order_completed rate is higher.
+  
+  with
+      qrySource as (
+         select * from `data-recruiting.ae_data_challenge_v1.web_events` 
+      ),
+
+      qryExtracted as 
+      (
+        select 
+            _id as web_event_id,
+            json_extract_scalar(event_properties, '$.order_id') as order_id
+        from 
+            qrySource
+      )
+  
+  select sum(case when order_id is null then 1 else 0 end)/ count(*) as missing_proportion from qryExtracted
+  
+  - The customer_id is not a consistant length. Usually there is a set length for this kind of id. There is a value that is not an id, 'NaN', which includes almost half of the values in the customer_id field.
+    The standard length for this field in the table is 13, but after using the following query, I see there are many different lengths.  
+  
+  with
+    qrySource as (
+        select * from `data-recruiting.ae_data_challenge_v1.web_events` 
+    ),
+
+    qryLength as 
+    (
+        select 
+            customer_id,
+            length(customer_id) as length
+        from qrySource
+    ),
+
+    qryCount as 
+    (
+        select distinct
+            length, 
+            count(customer_id)over(partition by length) as count 
+        from qryLength
+        order by count desc
+    )
+  
+  select * from qryCount
