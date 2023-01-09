@@ -29,7 +29,7 @@ with
             cast(updated_at as timestamp) as order_last_updated_time,            
             product_id is null as order_has_no_product_id
     	from
-    		qrySource
+            qrySource
     ),
 
     qryDeduped as 
