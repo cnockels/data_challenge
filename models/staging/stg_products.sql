@@ -25,7 +25,7 @@ with
     (
     	select distinct
             {{ generateNumericalHash(['variant_id']) }} as product_wid,
-    		cast(_id as string) as product_id,
+    	    cast(_id as string) as product_id,
             title as product_title,
             if(trim(category) = '', cast(null as string), trim(category)) as product_category,
             cast(created_at as date) as product_created_date,
