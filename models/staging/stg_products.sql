@@ -24,6 +24,7 @@ with
     qryProductSize as 
     (
     	select distinct
+            {{ generateNumericalHash(['variant_id']) }} as product_wid,
     		cast(_id as string) as product_id,
             title as product_title,
             if(trim(category) = '', cast(null as string), trim(category)) as product_category,
@@ -31,7 +32,7 @@ with
             created_at as product_created_time,
             cast(updated_at as date) as product_last_updated_date,
             updated_at as product_last_updated_time,
-    		cast(variant_id as string) as product_variant_id,
+    	    cast(variant_id as string) as product_variant_id,
             variant_title as product_variant_title,
             product_sku,
             option1,
